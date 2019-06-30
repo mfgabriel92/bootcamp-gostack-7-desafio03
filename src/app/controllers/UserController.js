@@ -27,7 +27,7 @@ class UserController {
 
     user = await User.create(body)
 
-    return res.status(HTTP.CREATED).json(user)
+    return res.status(HTTP.CREATED).json({ user })
   }
 
   /**
@@ -38,7 +38,7 @@ class UserController {
    */
   async update(req, res) {
     const { email, oldPassword } = req.body
-    let user = await User.findByPk(req.userId)
+    const user = await User.findByPk(req.userId)
 
     try {
       await updateUser.validate(req.body, { abortEarly: false })
@@ -60,9 +60,9 @@ class UserController {
         .json({ error: 'Credentials do not match' })
     }
 
-    user = await user.update(req.body)
+    await user.update(req.body)
 
-    return res.json(user)
+    return res.json({ user })
   }
 }
 
