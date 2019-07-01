@@ -19,24 +19,24 @@ class Mail {
   }
 
   templates() {
-    const viewsDir = resolve(__dirname, '..', 'app', 'views', 'emails')
+    const viewPath = resolve(__dirname, '..', 'app', 'views', 'emails')
 
     this.transporter.use(
       'compile',
       nodemailerhbs({
         viewEngine: expresshbs.create({
-          layoutsDir: resolve(viewsDir, 'layouts'),
-          partialsDir: resolve(viewsDir, 'partials'),
+          layoutsDir: resolve(viewPath, 'layouts'),
+          partialsDir: resolve(viewPath, 'partials'),
           defaultLayout: 'default',
           extname: '.hbs',
         }),
-        views: viewsDir,
+        viewPath,
         extName: '.hbs',
       })
     )
   }
 
-  send(message) {
+  sendMail(message) {
     return this.transporter.sendMail({
       ...mail.default,
       ...message,

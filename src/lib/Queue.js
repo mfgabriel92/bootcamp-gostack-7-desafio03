@@ -1,4 +1,3 @@
-import 'dotenv/config'
 import Bee from 'bee-queue'
 import redis from '../config/redis'
 import NewAttendantMail from '../app/jobs/NewAttendantMail'
@@ -27,7 +26,7 @@ class Queue {
   process() {
     jobs.forEach(job => {
       const { bee, handle } = this.queues[job.key]
-      bee.on('failue', this.onFailure).process(handle)
+      bee.on('failed', this.onFailure).process(handle)
     })
   }
 

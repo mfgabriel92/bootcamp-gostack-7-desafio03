@@ -7,7 +7,7 @@ class NewAttendantMail {
   }
 
   async handle({ data: { meetup, attendant } }) {
-    await Mail.send({
+    await Mail.sendMail({
       to: `${meetup.user.first_name} | <${meetup.user.email}>`,
       subject: `${attendant.user.first_name} ${attendant.user.last_name} is attending your event`,
       template: 'new-attendant',
