@@ -1,12 +1,49 @@
-import { isBefore } from 'date-fns'
-import Attendant from '../models/Attendant'
+import { startOfDay, endOfDay, isBefore } from 'date-fns'
+import { Op } from 'sequelize'
 import Meetup from '../models/Meetup'
 import User from '../models/User'
+import File from '../models/File'
+import Attendant from '../models/Attendant'
 import HTTP from '../../utils/httpResponse'
 import Queue from '../../lib/Queue'
 import NewAttendantMail from '../jobs/NewAttendantMail'
 
 class AttendantController {
+  /**
+   * List all the meetups the user is attending to by date
+   *
+   * @param {Request} req
+   * @param {Response} res
+   */
+  async index(req, res) {
+    const meetups = await Meetup.findAll({
+      where: {
+        date: {
+          [Op.between]: [startOfDay(new Date()), endOfDay(new Date())],
+        },
+      },
+      include: [
+        {
+          model: File,
+          as: 'banner',
+        },
+        {
+          model: User,
+          as: 'user',
+        },
+        {
+          model: Attendant,
+          where: {
+            user_id: req.userId,
+          },
+        },
+      ],
+      order: [['created_at', 'DESC']],
+    })
+
+    return res.json({ meetups })
+  }
+
   /**
    * Lorem
    *
@@ -30,10 +67,10 @@ class AttendantController {
         .json({ error: 'The meetup does not exist' })
     }
 
-    // Yours meetup
+    // Your meetup
     if (meetup.user_id === req.userId) {
       return res.status(HTTP.UNAUTHORIZED).json({
-        error: 'You cannot register as an attendee of an meetup you created',
+        error: 'You cannot register as an attendee of a meetup you created',
       })
     }
 
