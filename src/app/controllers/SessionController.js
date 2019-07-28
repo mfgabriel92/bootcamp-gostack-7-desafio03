@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import User from '../models/User'
+import File from '../models/File'
 import HTTP from '../../utils/httpResponse'
 import sessionValidation from '../../utils/validators/session'
 
@@ -18,7 +19,15 @@ class SessionController {
     }
 
     const { email, password } = req.body
-    const user = await User.findOne({ where: { email } })
+    const user = await User.findOne({
+      where: { email },
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+        },
+      ],
+    })
 
     if (!user || !(await user.isPasswordCorrect(password))) {
       return res
@@ -26,11 +35,9 @@ class SessionController {
         .json({ error: 'Credentials do not match' })
     }
 
-    const { id, name } = user
-
     return res.json({
-      user: { id, name, email },
-      token: jwt.sign({ id }, process.env.JWT_SECRET, {
+      user,
+      token: jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
         expiresIn: '7d',
       }),
     })

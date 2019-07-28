@@ -26,6 +26,10 @@ class User extends Model {
     return this
   }
 
+  static associate(models) {
+    this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' })
+  }
+
   isPasswordCorrect(password) {
     return bcrypt.compare(password, this.password_hash)
   }
@@ -37,6 +41,7 @@ class User extends Model {
       middle_name: this.middle_name,
       last_name: this.last_name,
       email: this.email,
+      avatar: this.avatar,
     }
   }
 }

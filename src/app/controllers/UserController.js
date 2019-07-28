@@ -10,14 +10,15 @@ class UserController {
    * @param {Reponse} res response
    */
   async store(req, res) {
-    const { body } = req
-    let user = await User.findOne({ where: { email: body.email } })
-
     try {
       await newUser.validate(req.body, { abortEarly: false })
     } catch (e) {
       return res.status(HTTP.BAD_REQUEST).json({ error: e.errors })
     }
+
+    const { body } = req
+
+    let user = await User.findOne({ where: { email: body.email } })
 
     if (user) {
       return res
