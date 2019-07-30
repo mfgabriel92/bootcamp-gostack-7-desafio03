@@ -35,7 +35,7 @@ class MeetupController {
       ],
       limit: 10,
       offset: (page - 1) * 10,
-      order: [['created_at', 'DESC']],
+      order: [['date', 'ASC']],
     })
 
     return res.json({ meetups })
