@@ -1,6 +1,5 @@
 import User from '../models/User'
 import HTTP from '../../utils/httpResponse'
-import { newUser, updateUser } from '../../utils/validators/user'
 
 class UserController {
   /**
@@ -10,12 +9,6 @@ class UserController {
    * @param {Reponse} res response
    */
   async store(req, res) {
-    try {
-      await newUser.validate(req.body, { abortEarly: false })
-    } catch (e) {
-      return res.status(HTTP.BAD_REQUEST).json({ error: e.errors })
-    }
-
     const { body } = req
 
     let user = await User.findOne({ where: { email: body.email } })
@@ -40,12 +33,6 @@ class UserController {
   async update(req, res) {
     const { email, oldPassword } = req.body
     const user = await User.findByPk(req.userId)
-
-    try {
-      await updateUser.validate(req.body, { abortEarly: false })
-    } catch (e) {
-      return res.status(HTTP.BAD_REQUEST).json({ error: e.errors })
-    }
 
     if (email !== user.email) {
       if ((await User.count({ where: { email } })) > 0) {

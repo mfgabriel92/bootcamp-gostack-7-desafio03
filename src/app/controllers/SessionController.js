@@ -2,7 +2,6 @@ import jwt from 'jsonwebtoken'
 import User from '../models/User'
 import File from '../models/File'
 import HTTP from '../../utils/httpResponse'
-import sessionValidation from '../../utils/validators/session'
 
 class SessionController {
   /**
@@ -12,12 +11,6 @@ class SessionController {
    * @param {Reponse} res response
    */
   async store(req, res) {
-    try {
-      await sessionValidation.validate(req.body, { abortEarly: false })
-    } catch (e) {
-      return res.status(HTTP.BAD_REQUEST).json({ error: e.errors })
-    }
-
     const { email, password } = req.body
     const user = await User.findOne({
       where: { email },

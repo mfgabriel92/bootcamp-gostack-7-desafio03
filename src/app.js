@@ -1,8 +1,10 @@
 import 'express-async-errors'
 import express from 'express'
 import cors from 'cors'
+import helmet from 'helmet'
 import { resolve } from 'path'
 import Youch from 'youch'
+import rateLimit from './config/rate-limit'
 import routes from './routes'
 import HTTP from './utils/httpResponse'
 import './database'
@@ -19,10 +21,14 @@ class App {
   middlewares() {
     this.server.use(express.json())
     this.server.use(cors())
+    this.server.use(helmet())
     this.server.use(
       '/files',
       express.static(resolve(__dirname, '..', 'uploads'))
     )
+    if (process.env.NODE_ENV !== 'development') {
+      this.server.use(rateLimit)
+    }
   }
 
   routes() {
