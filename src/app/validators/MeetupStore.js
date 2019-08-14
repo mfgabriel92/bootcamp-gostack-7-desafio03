@@ -14,7 +14,7 @@ export default async (req, res, next) => {
 
     await schema.validate(req.body, { aborEarly: false })
     return next()
-  } catch (e) {
-    return res.status(HTTP.BAD_REQUEST).json({ error: e.errors })
+  } catch ({ errors }) {
+    return res.status(HTTP.BAD_REQUEST).json(errors)
   }
 }

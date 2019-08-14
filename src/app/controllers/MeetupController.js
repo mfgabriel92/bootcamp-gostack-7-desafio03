@@ -50,15 +50,19 @@ class MeetupController {
   async store(req, res) {
     const { title, description, location, date } = req.body
 
-    const meetup = await CreateMeetupService.run({
-      user_id: req.userId,
-      title,
-      description,
-      location,
-      date,
-    })
+    try {
+      const meetup = await CreateMeetupService.run({
+        user_id: req.userId,
+        title,
+        description,
+        location,
+        date,
+      })
 
-    return res.status(HTTP.CREATED).json({ meetup })
+      return res.status(HTTP.CREATED).json({ meetup })
+    } catch (e) {
+      return res.status(e.code).json(e.message)
+    }
   }
 
   /**

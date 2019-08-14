@@ -3,7 +3,7 @@ class ErrorMessage extends Error {
     super()
 
     this.code = code
-    this.message = message
+    this.message = [message]
   }
 }
 

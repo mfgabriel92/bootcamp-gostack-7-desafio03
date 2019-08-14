@@ -23,7 +23,7 @@ class App {
     this.server.use(cors())
     this.server.use(helmet())
     this.server.use(
-      '/files',
+      '/api/files',
       express.static(resolve(__dirname, '..', 'uploads'))
     )
     if (process.env.NODE_ENV !== 'development') {
