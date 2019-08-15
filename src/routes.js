@@ -30,12 +30,12 @@ routes.put('/api/users', validUserUpdate, UserController.update)
 routes.get('/api/users/meetups', UserMeetupController.index)
 
 routes.get('/api/meetups', AllMeetupController.index)
+routes.get('/api/meetups/attending', AttendantController.index)
 routes.post('/api/meetups', validMeetupStore, MeetupController.store)
 routes.put('/api/meetups/:id', validMeetupUpdate, MeetupController.update)
 routes.get('/api/meetups/:id', MeetupController.index)
 routes.delete('/api/meetups/:id', MeetupController.delete)
 routes.put('/api/meetups/:id/banner', upload, FileController.store)
-routes.get('/api/meetups/attending', AttendantController.index)
 routes.post('/api/meetups/:id/attend', AttendantController.store)
 
 export default routes
