@@ -62,23 +62,21 @@ class AttendantController {
     })
 
     if (!meetup) {
-      return res
-        .status(HTTP.NOT_FOUND)
-        .json({ error: 'The meetup does not exist' })
+      return res.status(HTTP.NOT_FOUND).json(['The meetup does not exist'])
     }
 
     // Your meetup
     if (meetup.user_id === req.userId) {
-      return res.status(HTTP.UNAUTHORIZED).json({
-        error: 'You cannot register as an attendee of a meetup you created',
-      })
+      return res
+        .status(HTTP.UNAUTHORIZED)
+        .json(['You cannot register as an attendee of a meetup you created'])
     }
 
     // Past meetup
     if (isBefore(meetup.date, new Date())) {
       return res
         .status(HTTP.BAD_REQUEST)
-        .json({ error: 'You cannot attend a past meetup' })
+        .json(['You cannot attend a past meetup'])
     }
 
     // Same meetup
@@ -90,9 +88,9 @@ class AttendantController {
     })
 
     if (existingMeetup > 0) {
-      return res.status(HTTP.BAD_REQUEST).json({
-        error: 'You already are attending this meetup',
-      })
+      return res
+        .status(HTTP.BAD_REQUEST)
+        .json(['You already are attending this meetup'])
     }
 
     // Same day
@@ -112,9 +110,9 @@ class AttendantController {
     })
 
     if (existingDate > 0) {
-      return res.status(HTTP.BAD_REQUEST).json({
-        error: 'You already have a meetup on this day and time',
-      })
+      return res
+        .status(HTTP.BAD_REQUEST)
+        .json(['You already have a meetup on this day and time'])
     }
 
     const newAttendant = await Attendant.create({
