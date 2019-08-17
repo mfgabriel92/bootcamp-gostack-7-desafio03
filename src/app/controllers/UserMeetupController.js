@@ -23,8 +23,8 @@ class UserMeetupController {
           as: 'user',
         },
       ],
-      limit: 10,
-      offset: (page - 1) * 10,
+      limit: 9,
+      offset: (page - 1) * 9,
       order: [['date', 'DESC']],
     })
 

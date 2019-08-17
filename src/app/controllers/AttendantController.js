@@ -16,6 +16,8 @@ class AttendantController {
    * @param {Response} res
    */
   async index(req, res) {
+    const { page = 1 } = req.query
+
     const meetups = await Meetup.findAll({
       where: {
         date: {
@@ -38,6 +40,8 @@ class AttendantController {
           },
         },
       ],
+      limit: 9,
+      offset: (page - 1) * 9,
       order: [['created_at', 'DESC']],
     })
 
