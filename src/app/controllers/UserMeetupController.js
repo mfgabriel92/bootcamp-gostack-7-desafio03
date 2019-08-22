@@ -10,7 +10,7 @@ class UserMeetupController {
    * @param {Response} res
    */
   async index(req, res) {
-    const { page = 1 } = req.query
+    const { page = 1, limit = 9 } = req.query
     const meetups = await Meetup.findAll({
       where: { user_id: req.userId },
       include: [
@@ -23,8 +23,8 @@ class UserMeetupController {
           as: 'user',
         },
       ],
-      limit: 9,
-      offset: (page - 1) * 9,
+      limit,
+      offset: (page - 1) * limit,
       order: [['date', 'DESC']],
     })
 
