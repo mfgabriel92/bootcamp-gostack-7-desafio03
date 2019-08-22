@@ -20,7 +20,7 @@ const upload = multer(multerConfig).single('file')
 const bruteForce = new Brute(bruteConfig).prevent
 const routes = new Router()
 
-routes.post('/api/auth', validSessionStore, bruteForce, SessionController.store)
+routes.post('/api/auth', validSessionStore, SessionController.store)
 routes.post('/api/users', validUserStore, UserController.store)
 
 routes.use(auth)
