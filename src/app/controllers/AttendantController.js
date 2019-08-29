@@ -49,7 +49,7 @@ class AttendantController {
   }
 
   /**
-   * Lorem
+   * Attend a meetup
    *
    * @param {Request} req
    * @param {Response} res
@@ -137,6 +137,42 @@ class AttendantController {
     await Queue.createJob(NewAttendantMail.key, { meetup, attendant })
 
     return res.status(HTTP.CREATED).send()
+  }
+
+  /**
+   * Unattend a meetup
+   *
+   * @param {Request} req
+   * @param {Response} res
+   */
+  async destroy(req, res) {
+    const { id } = req.params
+    const attending = await Attendant.findOne({
+      where: {
+        user_id: req.userId,
+        meetup_id: id,
+      },
+      include: [
+        {
+          model: Meetup,
+          as: 'meetup',
+        },
+      ],
+    })
+
+    if (!attending) {
+      return res
+        .status(HTTP.NOT_FOUND)
+        .json(['The meetup does not exist or you are not attending it.'])
+    }
+
+    if (isBefore(attending.meetup.date, new Date())) {
+      return res.status(HTTP.BAD_REQUEST).json(['This meetup is already past.'])
+    }
+
+    await attending.destroy()
+
+    return res.json(attending)
   }
 }
 

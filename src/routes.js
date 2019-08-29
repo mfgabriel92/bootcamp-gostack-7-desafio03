@@ -36,5 +36,6 @@ routes.get('/api/meetups/:id', MeetupController.show)
 routes.delete('/api/meetups/:id', MeetupController.delete)
 routes.put('/api/meetups/:id/banner', upload, FileController.store)
 routes.post('/api/meetups/:id/attend', AttendantController.store)
+routes.delete('/api/meetups/:id/unattend', AttendantController.destroy)
 
 export default routes
