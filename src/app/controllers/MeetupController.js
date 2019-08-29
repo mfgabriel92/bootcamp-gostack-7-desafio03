@@ -1,6 +1,5 @@
 import { parseISO, startOfDay, endOfDay, isBefore } from 'date-fns'
 import { Op } from 'sequelize'
-import Attendant from '../models/Attendant'
 import Meetup from '../models/Meetup'
 import User from '../models/User'
 import File from '../models/File'
@@ -30,12 +29,7 @@ class MeetupController {
       ],
     })
 
-    const isAttending =
-      (await Attendant.count({
-        where: { meetup_id: meetup.id, user_id: req.userId },
-      })) > 0
-
-    return res.json({ meetup, isAttending })
+    return res.json({ meetup })
   }
 
   /**
