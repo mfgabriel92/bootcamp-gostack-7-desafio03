@@ -33,14 +33,7 @@ class UserController {
    */
   async update(req, res) {
     const { email, oldPassword } = req.body
-    const user = await User.findByPk(req.userId, {
-      include: [
-        {
-          model: File,
-          as: 'avatar',
-        },
-      ],
-    })
+    const user = await User.findByPk(req.userId)
 
     if (email !== user.email) {
       if ((await User.count({ where: { email } })) > 0) {
@@ -58,7 +51,16 @@ class UserController {
 
     await user.update(req.body)
 
-    return res.json({ user })
+    const updatedUser = await User.findByPk(req.userId, {
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+        },
+      ],
+    })
+
+    return res.json({ user: updatedUser })
   }
 }
 
