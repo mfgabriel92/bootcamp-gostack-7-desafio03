@@ -56,6 +56,10 @@ class MeetupController {
         {
           model: User,
           as: 'user',
+          include: {
+            model: File,
+            as: 'avatar',
+          },
         },
       ],
       limit,

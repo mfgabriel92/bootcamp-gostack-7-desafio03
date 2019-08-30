@@ -32,6 +32,10 @@ class AttendantController {
         {
           model: User,
           as: 'user',
+          include: {
+            model: File,
+            as: 'avatar',
+          },
         },
         {
           model: Attendant,
