@@ -37,11 +37,11 @@ class User extends Model {
   toJSON() {
     return {
       id: this.id,
+      avatar: this.avatar,
       first_name: this.first_name,
       middle_name: this.middle_name,
       last_name: this.last_name,
       email: this.email,
-      avatar: this.avatar,
     }
   }
 }

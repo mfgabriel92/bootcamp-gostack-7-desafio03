@@ -1,4 +1,5 @@
 import User from '../models/User'
+import File from '../models/File'
 import HTTP from '../../utils/httpResponse'
 
 class UserController {
@@ -32,7 +33,14 @@ class UserController {
    */
   async update(req, res) {
     const { email, oldPassword } = req.body
-    const user = await User.findByPk(req.userId)
+    const user = await User.findByPk(req.userId, {
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+        },
+      ],
+    })
 
     if (email !== user.email) {
       if ((await User.count({ where: { email } })) > 0) {

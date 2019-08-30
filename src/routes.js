@@ -7,6 +7,7 @@ import auth from './app/middlewares/auth'
 import SessionController from './app/controllers/SessionController'
 import UserController from './app/controllers/UserController'
 import FileController from './app/controllers/FileController'
+import AvatarController from './app/controllers/AvatarController'
 import MeetupController from './app/controllers/MeetupController'
 import AttendantController from './app/controllers/AttendantController'
 import UserMeetupController from './app/controllers/UserMeetupController'
@@ -26,6 +27,7 @@ routes.post('/api/users', validUserStore, UserController.store)
 routes.use(auth)
 
 routes.put('/api/users', validUserUpdate, UserController.update)
+routes.post('/api/users/avatar', upload, AvatarController.store)
 routes.get('/api/users/meetups', UserMeetupController.index)
 
 routes.get('/api/meetups', MeetupController.index)
