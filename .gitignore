@@ -1,3 +1,5 @@
 node_modules
 .env
 uploads
+__tests__/coverage
+__tests__/meetapp_testing.sqlite
