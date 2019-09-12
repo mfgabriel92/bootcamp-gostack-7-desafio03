@@ -7,7 +7,7 @@
     "dev": "nodemon src/server",
     "queue": "nodemon src/queue",
     "pretest": "NODE_ENV=testing npx sequelize db:migrate",
-    "test": "NODE_ENV=testing jest --forceExit",
+    "test": "NODE_ENV=testing jest",
     "posttest": "NODE_ENV=testing npx sequelize db:migrate:undo:all"
   },
   "dependencies": {

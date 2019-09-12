@@ -8,7 +8,7 @@ import CreateMeetupService from '../services/CreateMeetupService'
 
 class MeetupController {
   /**
-   * Lists all the meetups of the day
+   * Show a specific meetup
    *
    * @param {Request} req
    * @param {Response} res
@@ -33,7 +33,7 @@ class MeetupController {
   }
 
   /**
-   * Show a specific meetup
+   * Lists all the meetups of the day
    *
    * @param {Request} req
    * @param {Response} res
