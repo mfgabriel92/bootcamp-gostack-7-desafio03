@@ -27,7 +27,8 @@ class App {
       '/api/files',
       express.static(resolve(__dirname, '..', 'uploads'))
     )
-    if (process.env.NODE_ENV !== 'development') {
+
+    if (process.env.NODE_ENV === 'production') {
       this.server.use(rateLimit)
     }
   }

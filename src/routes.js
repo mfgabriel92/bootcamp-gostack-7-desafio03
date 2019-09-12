@@ -1,8 +1,8 @@
 import { Router } from 'express'
 import multer from 'multer'
-import Brute from 'express-brute'
+// import Brute from 'express-brute'
 import multerConfig from './config/multer'
-import bruteConfig from './config/brute-redis'
+// import bruteConfig from './config/brute-redis'
 import auth from './app/middlewares/auth'
 import SessionController from './app/controllers/SessionController'
 import UserController from './app/controllers/UserController'
@@ -18,7 +18,7 @@ import validMeetupStore from './app/validators/MeetupStore'
 import validMeetupUpdate from './app/validators/MeetupUpdate'
 
 const upload = multer(multerConfig).single('file')
-const bruteForce = new Brute(bruteConfig).prevent
+// const bruteForce = new Brute(bruteConfig).prevent
 const routes = new Router()
 
 routes.post('/api/auth', validSessionStore, SessionController.store)

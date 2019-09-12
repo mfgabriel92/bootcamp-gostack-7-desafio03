@@ -1,14 +1,14 @@
 {
-  "name": "gobarber",
+  "name": "meetapp",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server",
     "queue": "nodemon src/queue",
-    "pretest": "NODE_ENV=testing sequelize db:migrate",
-    "test": "NODE_ENV=testing jest",
-    "posttest": "NODE_ENV=testing sequelize db:migrate:undo:all"
+    "pretest": "NODE_ENV=testing npx sequelize db:migrate",
+    "test": "NODE_ENV=testing jest --forceExit",
+    "posttest": "NODE_ENV=testing npx sequelize db:migrate:undo:all"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
